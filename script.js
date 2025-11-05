@@ -5,9 +5,16 @@ const header = document.querySelector('header');
 
 hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
-    
+
     // Animate hamburger
     hamburger.classList.toggle('active');
+
+    // Prevent body scroll when menu is open
+    if (navMenu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
 });
 
 // Header scroll effect
@@ -60,7 +67,29 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         hamburger.classList.remove('active');
+        document.body.style.overflow = '';
     });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        navMenu.classList.remove('active');
+        hamburger.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// Prevent horizontal scroll
+document.addEventListener('DOMContentLoaded', () => {
+    const preventHorizontalScroll = () => {
+        if (document.body.scrollWidth > window.innerWidth) {
+            document.body.style.overflowX = 'hidden';
+        }
+    };
+
+    preventHorizontalScroll();
+    window.addEventListener('resize', preventHorizontalScroll);
 });
 
 // Smooth Scrolling
@@ -166,14 +195,16 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const hero = document.querySelector('.hero');
-    const scrolled = window.pageYOffset;
-    if (hero) {
-        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-    }
-});
+// Parallax effect for hero section (disabled on mobile for performance)
+if (window.innerWidth > 768) {
+    window.addEventListener('scroll', () => {
+        const hero = document.querySelector('.hero');
+        const scrolled = window.pageYOffset;
+        if (hero) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+}
 
 // Counter animation for statistics (if you want to add later)
 function animateCounter(element, target, duration) {
