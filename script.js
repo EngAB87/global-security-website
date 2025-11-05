@@ -147,8 +147,8 @@ contactForm.addEventListener('submit', (e) => {
                            `${email ? `البريد الإلكتروني: ${email}%0A` : ''}` +
                            `الرسالة: ${message}`;
     
-    // Open WhatsApp
-    window.open(`https://wa.me/201121153344?text=${whatsappMessage}`, '_blank');
+    // Open WhatsApp (replace XXXXXXXXXXX with your actual WhatsApp number)
+    window.open(`https://wa.me/20XXXXXXXXXX?text=${whatsappMessage}`, '_blank');
     
     // Show success message
     alert('شكراً لتواصلك معنا! سيتم فتح واتساب لإرسال رسالتك.');
