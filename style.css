@@ -678,7 +678,7 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 [data-theme="dark"] .product-card:hover {
     background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
     border-color: rgba(96, 165, 250, 0.3);
-    transform: translateY(-15px) scale(1.02);
+    transform: translateY(-15px);
 }
 
 .product-card::before {
@@ -711,7 +711,7 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 }
 
 .product-card:hover {
-    transform: translateY(-10px) scale(1.02);
+    transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     border-color: var(--primary-color);
 }
@@ -904,7 +904,7 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 }
 
 .feature-box:hover {
-    transform: translateY(-15px) scale(1.05);
+    transform: translateY(-15px);
     background: rgba(255, 255, 255, 0.2);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
 }
@@ -1318,6 +1318,10 @@ footer::before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        font-size: 1.1rem;
+    }
+
     .logo {
         order: 2;
     }
@@ -1372,14 +1376,14 @@ footer::before {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     .hero-subtitle {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     .hero-description {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 }
