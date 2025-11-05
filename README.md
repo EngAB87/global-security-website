@@ -151,4 +151,4 @@ window.open(`https://wa.me/20XXXXXXXXXX?text=${whatsappMessage}`, '_blank');
 
 ---
 
-© 2024 Global Security. جميع الحقوق محفوظة.
+© 2025 Global Security. جميع الحقوق محفوظة.
