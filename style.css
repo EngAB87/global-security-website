@@ -574,8 +574,15 @@ header.scrolled .header-social-icon {
 }
 
 .hero-description {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    margin-bottom: 2.5rem;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.3px;
     animation: fadeInUp 1s ease 0.4s both;
 }
 
@@ -2100,7 +2107,9 @@ footer::before {
 
     .hero-description {
         font-size: 1rem;
-        padding: 0 10px;
+        line-height: 1.8;
+        padding: 0 1.5rem;
+        max-width: 100%;
     }
 
     .hero-buttons {
@@ -2217,8 +2226,9 @@ footer::before {
     }
 
     .hero-description {
-        font-size: 0.9rem;
-        padding: 0 5px;
+        font-size: 0.95rem;
+        line-height: 1.75;
+        padding: 0 1rem;
     }
 
     .btn {
