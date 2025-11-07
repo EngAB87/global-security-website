@@ -463,20 +463,20 @@ function copyProductLink(url) {
             chatbotPopup.style.top = 'auto';
             chatbotPopup.style.right = 'auto';
         } else {
-            // Mobile - Centered
+            // Mobile - Left
             chatbotWrapper.style.position = 'fixed';
             chatbotWrapper.style.bottom = window.innerWidth <= 480 ? '15px' : '20px';
-            chatbotWrapper.style.left = '50%';
-            chatbotWrapper.style.transform = 'translateX(-50%) translateZ(0)';
-            chatbotWrapper.style.webkitTransform = 'translateX(-50%) translateZ(0)';
+            chatbotWrapper.style.left = window.innerWidth <= 480 ? '15px' : '20px';
+            chatbotWrapper.style.transform = 'translateZ(0)';
+            chatbotWrapper.style.webkitTransform = 'translateZ(0)';
             chatbotWrapper.style.zIndex = '999999';
             chatbotWrapper.style.top = 'auto';
             chatbotWrapper.style.right = 'auto';
             chatbotPopup.style.position = 'fixed';
             chatbotPopup.style.bottom = window.innerWidth <= 480 ? '75px' : '90px';
-            chatbotPopup.style.left = '50%';
-            chatbotPopup.style.transform = 'translateX(-50%) translateY(20px) scale(0.9) translateZ(0)';
-            chatbotPopup.style.webkitTransform = 'translateX(-50%) translateY(20px) scale(0.9) translateZ(0)';
+            chatbotPopup.style.left = window.innerWidth <= 480 ? '15px' : '20px';
+            chatbotPopup.style.transform = 'translateY(20px) scale(0.9) translateZ(0)';
+            chatbotPopup.style.webkitTransform = 'translateY(20px) scale(0.9) translateZ(0)';
             chatbotPopup.style.zIndex = '10000000';
             chatbotPopup.style.top = 'auto';
             chatbotPopup.style.right = 'auto';

@@ -3959,22 +3959,22 @@ footer::after {
     }
 }
 
-/* Responsive Chatbot - Centered on Mobile */
+/* Responsive Chatbot - Left on Mobile */
 @media (max-width: 768px) {
     .chatbot-wrapper {
         bottom: 20px !important;
-        left: 50% !important;
-        transform: translateX(-50%) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateZ(0) !important;
+        left: 20px !important;
+        transform: translateZ(0) !important;
+        -webkit-transform: translateZ(0) !important;
         right: auto !important;
     }
     
     .chatbot-popup {
         position: fixed !important;
         bottom: 90px !important;
-        left: 50% !important;
-        transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
+        left: 20px !important;
+        transform: translateY(20px) scale(0.9) translateZ(0) !important;
+        -webkit-transform: translateY(20px) scale(0.9) translateZ(0) !important;
         right: auto !important;
         width: calc(100vw - 2rem);
         max-width: 380px;
@@ -3982,8 +3982,8 @@ footer::after {
     }
     
     .chatbot-popup.active {
-        transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
+        transform: translateY(0) scale(1) translateZ(0) !important;
+        -webkit-transform: translateY(0) scale(1) translateZ(0) !important;
     }
     
     .chatbot-toggle-btn {
@@ -3996,26 +3996,26 @@ footer::after {
 @media (max-width: 480px) {
     .chatbot-wrapper {
         bottom: 15px !important;
-        left: 50% !important;
-        transform: translateX(-50%) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateZ(0) !important;
+        left: 15px !important;
+        transform: translateZ(0) !important;
+        -webkit-transform: translateZ(0) !important;
         right: auto !important;
     }
     
     .chatbot-popup {
         position: fixed !important;
         bottom: 75px !important;
-        left: 50% !important;
-        transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
+        left: 15px !important;
+        transform: translateY(20px) scale(0.9) translateZ(0) !important;
+        -webkit-transform: translateY(20px) scale(0.9) translateZ(0) !important;
         right: auto !important;
         width: calc(100vw - 1rem);
         height: 450px;
     }
     
     .chatbot-popup.active {
-        transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
+        transform: translateY(0) scale(1) translateZ(0) !important;
+        -webkit-transform: translateY(0) scale(1) translateZ(0) !important;
     }
     
     .chatbot-popup-messages {
