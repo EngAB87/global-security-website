@@ -849,18 +849,36 @@ window.addEventListener('pageshow', (event) => {
     }
 });
 
-// Hide Loading Screen
-window.addEventListener('load', () => {
+// Hide Loading Screen - Multiple fallbacks to ensure it always hides
+function hideLoadingScreen() {
     const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
         setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-            setTimeout(() => {
-                loadingScreen.style.display = 'none';
-            }, 500);
-        }, 800);
+            loadingScreen.style.display = 'none';
+        }, 500);
     }
+}
+
+// Try to hide on DOMContentLoaded (faster)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(hideLoadingScreen, 500);
+    });
+} else {
+    // DOM already loaded
+    setTimeout(hideLoadingScreen, 500);
+}
+
+// Also hide on window load (when all resources are loaded)
+window.addEventListener('load', () => {
+    hideLoadingScreen();
 });
+
+// Fallback: Force hide after 3 seconds maximum
+setTimeout(() => {
+    hideLoadingScreen();
+}, 3000);
 
 // Additional scroll to top on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
