@@ -3594,9 +3594,9 @@ footer::after {
 
 /* Chatbot Popup Window */
 .chatbot-popup {
-    position: absolute;
-    bottom: 80px;
-    left: 0;
+    position: fixed;
+    bottom: 100px;
+    left: 30px;
     width: 380px;
     max-width: calc(100vw - 2rem);
     height: 600px;
@@ -3952,9 +3952,12 @@ footer::after {
     }
     
     .chatbot-popup {
+        position: fixed;
+        bottom: 90px;
+        left: 20px;
         width: calc(100vw - 2rem);
+        max-width: 380px;
         height: 500px;
-        left: 0;
     }
     
     .chatbot-toggle-btn {
@@ -3971,9 +3974,11 @@ footer::after {
     }
     
     .chatbot-popup {
+        position: fixed;
+        bottom: 75px;
+        left: 15px;
         width: calc(100vw - 1rem);
         height: 450px;
-        bottom: 70px;
     }
     
     .chatbot-popup-messages {
@@ -3982,6 +3987,30 @@ footer::after {
     
     .chatbot-message-item {
         max-width: 90%;
+    }
+}
+
+/* Ensure chatbot stays fixed on desktop */
+@media (min-width: 769px) {
+    .chatbot-wrapper {
+        position: fixed !important;
+        bottom: 30px !important;
+        left: 30px !important;
+        z-index: 9999 !important;
+    }
+    
+    .chatbot-popup {
+        position: fixed !important;
+        bottom: 100px !important;
+        left: 30px !important;
+        z-index: 10000 !important;
+    }
+    
+    .chatbot-toggle-btn {
+        position: relative !important;
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 
