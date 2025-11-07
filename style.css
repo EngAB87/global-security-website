@@ -1554,10 +1554,21 @@ footer::before {
     margin-bottom: 1.5rem;
     font-size: 1.4rem;
     font-weight: 700;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #10b981;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-section h3 i {
+    color: #10b981;
+    font-size: 1.2rem;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-top: 0.5rem;
 }
 
 .footer-section ul {
@@ -1565,11 +1576,12 @@ footer::before {
 }
 
 .footer-section ul li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .footer-section a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -1578,8 +1590,9 @@ footer::before {
 }
 
 .footer-section a:hover {
-    color: var(--primary-color);
-    transform: translateX(5px);
+    color: #10b981;
+    transform: translateX(-5px);
+    padding-right: 5px;
 }
 
 .footer-section a i {
@@ -1589,8 +1602,9 @@ footer::before {
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
+    margin-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
 }
 
