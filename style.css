@@ -1550,19 +1550,25 @@ footer::before {
     margin-bottom: 2rem;
 }
 
-.footer-section h3 {
+.footer-logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 1.5rem;
+}
+
+.footer-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+}
+
+.footer-section h3 {
+    margin: 0;
     font-size: 1.4rem;
     font-weight: 700;
     color: #10b981;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.footer-section h3 i {
-    color: #10b981;
-    font-size: 1.2rem;
 }
 
 .footer-section p {
@@ -2184,6 +2190,18 @@ footer::before {
         font-size: 1rem;
     }
 
+    .footer-logo {
+        height: 45px;
+    }
+
+    .footer-logo-section {
+        gap: 0.9rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.3rem;
+    }
+
     .about-item {
         flex-direction: column;
         gap: 1.5rem;
@@ -2316,6 +2334,18 @@ footer::before {
         bottom: 20px;
         right: 20px;
         font-size: 1rem;
+    }
+
+    .footer-logo {
+        height: 40px;
+    }
+
+    .footer-logo-section {
+        gap: 0.8rem;
+    }
+
+    .footer-section h3 {
+        font-size: 1.2rem;
     }
 
     .about-stats {
