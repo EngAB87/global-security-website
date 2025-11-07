@@ -169,13 +169,22 @@ contactForm.addEventListener('submit', (e) => {
     }, 1000); // 1 second delay to show loading state
 });
 
+// Prevent browser from restoring scroll position
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+// Scroll to top immediately on page load/refresh (before everything loads)
+window.scrollTo(0, 0);
+document.documentElement.scrollTop = 0;
+document.body.scrollTop = 0;
+
 // Scroll to top on page load/refresh
 window.addEventListener('load', () => {
-    // Scroll to top immediately
-    window.scrollTo({
-        top: 0,
-        behavior: 'auto' // Use 'auto' for instant scroll on load
-    });
+    // Force scroll to top
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     
     // Add loading animation
     document.body.style.opacity = '0';
@@ -185,15 +194,28 @@ window.addEventListener('load', () => {
     }, 100);
 });
 
-// Also scroll to top when page is shown (for browser back/forward)
+// Also scroll to top when page is shown (for browser back/forward and refresh)
 window.addEventListener('pageshow', (event) => {
+    // Always scroll to top, whether from cache or not
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
     // If page was loaded from cache (back/forward navigation)
     if (event.persisted) {
-        window.scrollTo({
-            top: 0,
-            behavior: 'auto'
-        });
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+        }, 0);
     }
+});
+
+// Additional scroll to top on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
 });
 
 // Parallax effect for hero section
