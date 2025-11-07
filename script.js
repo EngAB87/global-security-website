@@ -26,48 +26,62 @@ window.addEventListener('scroll', () => {
 });
 
 // Dark Mode Toggle
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
+// Initialize theme immediately
+(function initTheme() {
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+})();
 
-// Check for saved theme preference or default to 'light'
-const currentTheme = localStorage.getItem('theme') || 'light';
-html.setAttribute('data-theme', currentTheme);
-
-// Update icon based on theme
-function updateThemeIcon() {
-    if (!themeToggle) return;
-    const icon = themeToggle.querySelector('i');
-    if (!icon) return;
-    if (html.getAttribute('data-theme') === 'dark') {
-        icon.className = 'fas fa-sun';
-    } else {
-        icon.className = 'fas fa-moon';
+// Wait for DOM to be ready before accessing elements
+function initDarkMode() {
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    
+    // Ensure theme is set
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    html.setAttribute('data-theme', savedTheme);
+    
+    // Update icon based on theme
+    function updateThemeIcon() {
+        if (!themeToggle) return;
+        const icon = themeToggle.querySelector('i');
+        if (!icon) return;
+        if (html.getAttribute('data-theme') === 'dark') {
+            icon.className = 'fas fa-sun';
+        } else {
+            icon.className = 'fas fa-moon';
+        }
+    }
+    
+    // Update icon immediately
+    updateThemeIcon();
+    
+    // Toggle theme
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon();
+            
+            // Add animation
+            themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 300);
+        });
     }
 }
 
-// Wait for DOM to be ready
+// Initialize when DOM is ready
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    document.addEventListener('DOMContentLoaded', initDarkMode);
 } else {
-    updateThemeIcon();
+    initDarkMode();
 }
-
-// Toggle theme
-if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        html.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon();
-        
-        // Add animation
-    themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
-    setTimeout(() => {
-        themeToggle.style.transform = '';
-    }, 300);
-});
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-menu a').forEach(link => {
