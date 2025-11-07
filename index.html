@@ -812,6 +812,52 @@
 
     <!-- Toast Notification Container -->
     <div id="toastContainer" class="toast-container"></div>
+    
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div class="chatbot-header-info">
+                    <div class="chatbot-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <h3>مساعد Global Smart Security</h3>
+                        <span class="chatbot-status">متصل الآن</span>
+                    </div>
+                </div>
+                <button class="chatbot-close" id="chatbotClose" aria-label="إغلاق الشات">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chatbot-message bot-message">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>مرحباً! 👋 أنا مساعدك الذكي من Global Smart Security. كيف يمكنني مساعدتك اليوم؟</p>
+                        <span class="message-time">الآن</span>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-quick-replies" id="chatbotQuickReplies">
+                <button class="quick-reply-btn" onclick="sendQuickMessage('ما هي خدماتكم؟')">ما هي خدماتكم؟</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('كم سعر الكاميرات؟')">أسعار الكاميرات</button>
+                <button class="quick-reply-btn" onclick="sendQuickMessage('كيف أتواصل معكم؟')">التواصل</button>
+            </div>
+            <div class="chatbot-input-container">
+                <input type="text" id="chatbotInput" placeholder="اكتب رسالتك هنا..." autocomplete="off">
+                <button class="chatbot-send" id="chatbotSend" aria-label="إرسال">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        <button class="chatbot-toggle" id="chatbotToggle" aria-label="فتح الشات">
+            <i class="fas fa-comments"></i>
+            <span class="chatbot-badge">1</span>
+        </button>
+    </div>
 
     <!-- Schema.org Structured Data -->
     <script type="application/ld+json">

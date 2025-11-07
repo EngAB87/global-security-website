@@ -36,43 +36,43 @@ window.addEventListener('scroll', () => {
 // Wait for DOM to be ready before accessing elements
 function initDarkMode() {
     const html = document.documentElement;
-    const themeToggle = document.getElementById('themeToggle');
+const themeToggle = document.getElementById('themeToggle');
     
     // Ensure theme is set
     const savedTheme = localStorage.getItem('theme') || 'light';
     html.setAttribute('data-theme', savedTheme);
-    
-    // Update icon based on theme
-    function updateThemeIcon() {
+
+// Update icon based on theme
+function updateThemeIcon() {
         if (!themeToggle) return;
-        const icon = themeToggle.querySelector('i');
+    const icon = themeToggle.querySelector('i');
         if (!icon) return;
-        if (html.getAttribute('data-theme') === 'dark') {
-            icon.className = 'fas fa-sun';
-        } else {
-            icon.className = 'fas fa-moon';
-        }
+    if (html.getAttribute('data-theme') === 'dark') {
+        icon.className = 'fas fa-sun';
+    } else {
+        icon.className = 'fas fa-moon';
     }
-    
+}
+
     // Update icon immediately
+updateThemeIcon();
+
+// Toggle theme
+    if (themeToggle) {
+themeToggle.addEventListener('click', () => {
+    const currentTheme = html.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    html.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
     updateThemeIcon();
     
-    // Toggle theme
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeIcon();
-            
-            // Add animation
-            themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
-            setTimeout(() => {
-                themeToggle.style.transform = '';
-            }, 300);
-        });
+    // Add animation
+    themeToggle.style.transform = 'rotate(360deg) scale(1.2)';
+    setTimeout(() => {
+        themeToggle.style.transform = '';
+    }, 300);
+});
     }
 }
 
@@ -339,9 +339,9 @@ function showFieldError(errorId, message) {
 }
 
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
         // Validate form
         if (!validateForm()) {
             showToast('خطأ في التحقق', 'يرجى تصحيح الأخطاء في النموذج', 'error');
@@ -359,20 +359,20 @@ if (contactForm) {
         
         // Simulate processing delay
         setTimeout(() => {
-            // Create WhatsApp message
-            const whatsappMessage = `مرحباً، أنا ${name}%0A` +
-                                   `رقم الهاتف: ${phone}%0A` +
-                                   `${email ? `البريد الإلكتروني: ${email}%0A` : ''}` +
-                                   `الرسالة: ${message}`;
-            
-            // Open WhatsApp
-            window.open(`https://wa.me/201121153344?text=${whatsappMessage}`, '_blank');
-            
-            // Show success message
+    // Create WhatsApp message
+    const whatsappMessage = `مرحباً، أنا ${name}%0A` +
+                           `رقم الهاتف: ${phone}%0A` +
+                           `${email ? `البريد الإلكتروني: ${email}%0A` : ''}` +
+                           `الرسالة: ${message}`;
+    
+    // Open WhatsApp
+    window.open(`https://wa.me/201121153344?text=${whatsappMessage}`, '_blank');
+    
+    // Show success message
             showToast('نجح!', 'شكراً لتواصلك معنا! سيتم فتح واتساب لإرسال رسالتك.', 'success');
-            
-            // Reset form
-            contactForm.reset();
+    
+    // Reset form
+    contactForm.reset();
             charCount.textContent = '0';
             charCounter.classList.remove('warning', 'error');
             document.querySelectorAll('.error-message').forEach(error => {
@@ -423,6 +423,173 @@ function shareProduct(productName, url, platform = 'whatsapp') {
 function copyProductLink(url) {
     const button = event.target.closest('.share-btn');
     copyToClipboard(url, button);
+}
+
+// Chatbot Functionality
+const chatbotToggle = document.getElementById('chatbotToggle');
+const chatbotWindow = document.getElementById('chatbotWindow');
+const chatbotClose = document.getElementById('chatbotClose');
+const chatbotInput = document.getElementById('chatbotInput');
+const chatbotSend = document.getElementById('chatbotSend');
+const chatbotMessages = document.getElementById('chatbotMessages');
+const chatbotBadge = document.querySelector('.chatbot-badge');
+
+// Toggle chatbot window
+if (chatbotToggle) {
+    chatbotToggle.addEventListener('click', () => {
+        chatbotWindow.classList.toggle('active');
+        if (chatbotWindow.classList.contains('active')) {
+            chatbotBadge.style.display = 'none';
+            chatbotInput.focus();
+        }
+    });
+}
+
+if (chatbotClose) {
+    chatbotClose.addEventListener('click', () => {
+        chatbotWindow.classList.remove('active');
+    });
+}
+
+// Chatbot responses
+const chatbotResponses = {
+    'خدمات': 'نقدم مجموعة شاملة من الخدمات الأمنية:\n\n📹 كاميرات المراقبة (PTZ، داخلية، خارجية)\n💾 أجهزة DVR & NVR للتسجيل\n💰 أنظمة نقاط البيع (POS)\n📊 أنظمة الحسابات\n🎨 خدمات التصميم الجرافيكي\n\nأي خدمة تريد معرفة المزيد عنها؟',
+    'سعر': 'أسعارنا تنافسية وتختلف حسب المتطلبات. للحصول على عرض سعر دقيق، يرجى التواصل معنا:\n\n📞 الهاتف: +20 112 1153 344\n📧 البريد: info@globalsmartsecurity.com\n💬 واتساب: متاح 24/7\n\nنوفر استشارة مجانية لتقييم احتياجاتك!',
+    'كاميرا': 'نوفر أنواع مختلفة من الكاميرات:\n\n🎥 كاميرات PTZ المتحركة - للمساحات الواسعة\n🏠 كاميرات داخلية - للمحلات والمكاتب\n🛡️ كاميرات خارجية - مقاومة للعوامل الجوية\n\nجميع الكاميرات بجودة عالية ودعم رؤية ليلية!',
+    'تواصل': 'يمكنك التواصل معنا عبر:\n\n📞 الهاتف: +20 112 1153 344\n📧 البريد: info@globalsmartsecurity.com\n💬 واتساب: اضغط على زر واتساب في الموقع\n🌐 فيسبوك: متاح على صفحتنا\n\nنرد خلال 24 ساعة!',
+    'موقع': 'نحن متواجدون في مصر ونساعد عملاءنا في جميع أنحاء البلاد. يمكننا زيارة موقعك لتقييم احتياجاتك وتقديم الحلول المناسبة.',
+    'default': 'شكراً لسؤالك! يمكنني مساعدتك في:\n\n✅ معلومات عن خدماتنا\n💰 الأسعار والعروض\n📞 طرق التواصل\n📹 أنواع الكاميرات\n💾 أجهزة التسجيل\n\nاكتب سؤالك أو اختر من الأزرار السريعة!'
+};
+
+// Get bot response
+function getBotResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+    
+    if (message.includes('خدمات') || message.includes('خدمة') || message.includes('ماذا تقدم')) {
+        return chatbotResponses['خدمات'];
+    } else if (message.includes('سعر') || message.includes('ثمن') || message.includes('تكلفة') || message.includes('كم')) {
+        return chatbotResponses['سعر'];
+    } else if (message.includes('كاميرا') || message.includes('كاميرات') || message.includes('مراقبة')) {
+        return chatbotResponses['كاميرا'];
+    } else if (message.includes('تواصل') || message.includes('اتصل') || message.includes('راسل') || message.includes('كيف')) {
+        return chatbotResponses['تواصل'];
+    } else if (message.includes('موقع') || message.includes('عنوان') || message.includes('مكان')) {
+        return chatbotResponses['موقع'];
+    } else {
+        return chatbotResponses['default'];
+    }
+}
+
+// Add message to chat
+function addMessage(text, isUser = false) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chatbot-message ${isUser ? 'user-message' : 'bot-message'}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'message-avatar';
+    avatar.innerHTML = `<i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>`;
+    
+    const content = document.createElement('div');
+    content.className = 'message-content';
+    
+    const textP = document.createElement('p');
+    textP.textContent = text;
+    content.appendChild(textP);
+    
+    const time = document.createElement('span');
+    time.className = 'message-time';
+    const now = new Date();
+    time.textContent = now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+    content.appendChild(time);
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(content);
+    
+    chatbotMessages.appendChild(messageDiv);
+    
+    // Scroll to bottom
+    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    
+    return messageDiv;
+}
+
+// Send message
+function sendMessage() {
+    const message = chatbotInput.value.trim();
+    if (!message) return;
+    
+    // Add user message
+    addMessage(message, true);
+    chatbotInput.value = '';
+    
+    // Disable send button
+    chatbotSend.disabled = true;
+    
+    // Show typing indicator
+    const typingIndicator = addMessage('يكتب...', false);
+    
+    // Simulate bot thinking
+    setTimeout(() => {
+        typingIndicator.remove();
+        
+        // Get bot response
+        const botResponse = getBotResponse(message);
+        
+        // Add bot response with typing effect
+        const botMessage = addMessage('', false);
+        const botText = botMessage.querySelector('p');
+        
+        let index = 0;
+        const typingInterval = setInterval(() => {
+            if (index < botResponse.length) {
+                botText.textContent = botResponse.substring(0, index + 1);
+                index++;
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            } else {
+                clearInterval(typingInterval);
+                chatbotSend.disabled = false;
+                chatbotInput.focus();
+            }
+        }, 30);
+    }, 1000);
+}
+
+// Send quick message
+function sendQuickMessage(message) {
+    chatbotInput.value = message;
+    sendMessage();
+}
+
+// Event listeners
+if (chatbotSend) {
+    chatbotSend.addEventListener('click', sendMessage);
+}
+
+if (chatbotInput) {
+    chatbotInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+    
+    chatbotInput.addEventListener('input', () => {
+        chatbotSend.disabled = !chatbotInput.value.trim();
+    });
+}
+
+// Hide badge after first interaction
+let badgeHidden = false;
+if (chatbotMessages) {
+    const observer = new MutationObserver(() => {
+        if (!badgeHidden && chatbotMessages.children.length > 1) {
+            badgeHidden = true;
+            if (chatbotBadge) {
+                chatbotBadge.style.display = 'none';
+            }
+        }
+    });
+    observer.observe(chatbotMessages, { childList: true });
 }
 
 // Toast Notification System
