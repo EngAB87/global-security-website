@@ -277,6 +277,61 @@ searchInput.addEventListener('keypress', (e) => {
     }
 });
 
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(question => {
+    question.addEventListener('click', () => {
+        const faqItem = question.parentElement;
+        const isActive = faqItem.classList.contains('active');
+        
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    });
+});
+
+// Statistics Counter Animation
+function animateCounter() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 50;
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / speed;
+        let current = 0;
+        
+        const updateCounter = () => {
+            if (current < target) {
+                current += increment;
+                counter.textContent = Math.ceil(current);
+                setTimeout(updateCounter, 20);
+            } else {
+                counter.textContent = target + (target >= 24 ? '' : '+');
+            }
+        };
+        
+        // Start animation when element is in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(counter);
+    });
+}
+
+// Initialize counter animation
+animateCounter();
+
 // Back to Top Button
 const backToTopButton = document.getElementById('backToTop');
 
