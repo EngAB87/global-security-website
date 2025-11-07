@@ -1686,14 +1686,43 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     width: 100%;
 }
 
+.input-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 15px;
+    padding: 2px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-wrapper:hover::before {
+    opacity: 1;
+}
+
+.input-wrapper:has(input:focus)::before,
+.input-wrapper:has(textarea:focus)::before {
+    opacity: 1;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.6), rgba(59, 130, 246, 0.6));
+}
+
 .input-icon {
     position: absolute;
-    right: 1.5rem;
+    left: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 1.1rem;
-    transition: all 0.4s ease;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.2rem;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     z-index: 2;
     pointer-events: none;
 }
@@ -1718,8 +1747,8 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 1.3rem 1.5rem 1.3rem 3.5rem;
-    border: 2px solid rgba(16, 185, 129, 0.2);
+    padding: 1.4rem 3.5rem 1.4rem 4rem;
+    border: 2px solid rgba(16, 185, 129, 0.25);
     border-radius: 15px;
     font-size: 1rem;
     font-family: inherit;
@@ -1728,6 +1757,8 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     color: #ffffff;
     backdrop-filter: blur(10px);
     position: relative;
+    text-align: right;
+    direction: rtl;
 }
 
 .form-group textarea {
@@ -1742,13 +1773,31 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     transition: all 0.3s ease;
 }
 
+.form-group input:hover,
+.form-group textarea:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    background-color: rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    transform: translateY(-2px);
+}
+
+.form-group input:hover ~ .input-icon,
+.form-group textarea:hover ~ .input-icon {
+    color: rgba(16, 185, 129, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.textarea-wrapper textarea:hover ~ .input-icon {
+    transform: translateY(0) scale(1.1);
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: #10b981;
-    background-color: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 0 25px rgba(16, 185, 129, 0.4), inset 0 0 20px rgba(16, 185, 129, 0.1);
-    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.5), inset 0 0 25px rgba(16, 185, 129, 0.15);
+    transform: translateY(-4px);
     padding-right: 1.5rem;
 }
 
@@ -1760,12 +1809,40 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
 .form-group input:focus ~ .input-icon,
 .form-group textarea:focus ~ .input-icon {
     color: #10b981;
-    transform: translateY(-50%) scale(1.2);
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+    transform: translateY(-50%) scale(1.3);
+    text-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+    animation: iconPulse 1.5s ease-in-out infinite;
 }
 
 .textarea-wrapper textarea:focus ~ .input-icon {
-    transform: translateY(0) scale(1.2);
+    transform: translateY(0) scale(1.3);
+    animation: iconPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% {
+        transform: translateY(-50%) scale(1.3);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-50%) scale(1.4);
+        opacity: 0.8;
+    }
+}
+
+.textarea-wrapper textarea:focus ~ .input-icon {
+    animation: iconPulseTextarea 1.5s ease-in-out infinite;
+}
+
+@keyframes iconPulseTextarea {
+    0%, 100% {
+        transform: translateY(0) scale(1.3);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(0) scale(1.4);
+        opacity: 0.8;
+    }
 }
 
 .form-group input:focus::placeholder,
