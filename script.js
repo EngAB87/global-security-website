@@ -107,34 +107,48 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-const scrollSections = Array.from(document.querySelectorAll('section[id]'));
+const navLinks = document.querySelectorAll('.nav-menu a[href^="#"]');
+const navSections = Array.from(navLinks)
+    .map(link => {
+        const targetId = link.getAttribute('href').slice(1);
+        const section = document.getElementById(targetId);
+        return section ? { id: targetId, section } : null;
+    })
+    .filter(Boolean);
 
 // Active Navigation on Scroll
-window.addEventListener('scroll', () => {
-    let current = scrollSections.length ? scrollSections[0].id : '';
-
-    scrollSections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.classList.remove('active');
-        if (current && link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-
-    // Add shadow to navbar on scroll
-    const navbar = document.querySelector('header');
-    if (window.scrollY > 100) {
-        navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
-    } else {
-        navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+const updateActiveNav = () => {
+    if (!navSections.length) {
+        return;
     }
-});
+
+    let currentId = navSections[0].id;
+    const scrollPosition = window.scrollY + 220; // accounts for fixed header height
+
+    navSections.forEach(({ id, section }) => {
+        if (scrollPosition >= section.offsetTop) {
+            currentId = id;
+        }
+    });
+
+    navLinks.forEach(link => {
+        const linkTarget = link.getAttribute('href');
+        link.classList.toggle('active', linkTarget === `#${currentId}`);
+    });
+
+    const navbar = document.querySelector('header');
+    if (navbar) {
+        if (window.scrollY > 100) {
+            navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+        } else {
+            navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+        }
+    }
+};
+
+window.addEventListener('scroll', updateActiveNav);
+window.addEventListener('load', updateActiveNav);
+window.addEventListener('resize', updateActiveNav);
 
 const animatedElements = document.querySelectorAll('.product-card, .service-card, .feature-box');
 
