@@ -114,7 +114,10 @@ const navSections = Array.from(navLinks)
         const section = document.getElementById(targetId);
         return section ? { id: targetId, section } : null;
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    .sort((a, b) => a.section.offsetTop - b.section.offsetTop);
+
+const headerElement = document.querySelector('header');
 
 // Active Navigation on Scroll
 const updateActiveNav = () => {
@@ -122,14 +125,34 @@ const updateActiveNav = () => {
         return;
     }
 
+    const scrollY = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    const headerHeight = headerElement ? headerElement.offsetHeight : 0;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.offsetHeight,
+        document.body.clientHeight,
+        document.documentElement.clientHeight
+    );
+    const referencePoint = scrollY + headerHeight + 10;
+
     let currentId = navSections[0].id;
-    const scrollPosition = window.scrollY + 220; // accounts for fixed header height
 
     navSections.forEach(({ id, section }) => {
-        if (scrollPosition >= section.offsetTop) {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+
+        if (referencePoint >= sectionTop && referencePoint < sectionBottom) {
             currentId = id;
         }
     });
+
+    // Ensure last section is active when near bottom of page
+    if (scrollY + viewportHeight >= documentHeight - 5) {
+        currentId = navSections[navSections.length - 1].id;
+    }
 
     navLinks.forEach(link => {
         const linkTarget = link.getAttribute('href');
