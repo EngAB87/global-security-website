@@ -3539,11 +3539,19 @@ footer::after {
 
 /* Chatbot Styles - New Clean Implementation */
 .chatbot-wrapper {
-    position: fixed;
-    bottom: 30px;
-    left: 30px;
-    z-index: 9999;
+    position: fixed !important;
+    bottom: 30px !important;
+    left: 30px !important;
+    z-index: 999999 !important;
     font-family: var(--font-arabic);
+    pointer-events: none;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
+}
+
+.chatbot-wrapper * {
+    pointer-events: auto;
 }
 
 /* Chatbot Toggle Button */
@@ -3594,9 +3602,9 @@ footer::after {
 
 /* Chatbot Popup Window */
 .chatbot-popup {
-    position: fixed;
-    bottom: 100px;
-    left: 30px;
+    position: fixed !important;
+    bottom: 100px !important;
+    left: 30px !important;
     width: 380px;
     max-width: calc(100vw - 2rem);
     height: 600px;
@@ -3608,16 +3616,23 @@ footer::after {
     flex-direction: column;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(20px) scale(0.9);
+    transform: translateY(20px) scale(0.9) translateZ(0);
+    -webkit-transform: translateY(20px) scale(0.9) translateZ(0);
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     overflow: hidden;
-    z-index: 10000;
+    z-index: 1000000 !important;
+    pointer-events: none;
+    will-change: transform, opacity;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
 }
 
 .chatbot-popup.active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) scale(1) translateZ(0) !important;
+    -webkit-transform: translateY(0) scale(1) translateZ(0) !important;
+    pointer-events: auto !important;
 }
 
 [data-theme="dark"] .chatbot-popup {
@@ -3992,11 +4007,18 @@ footer::after {
 
 /* Desktop Chatbot - Completely Different Design */
 @media (min-width: 769px) {
+    /* Ensure chatbot is above all other elements */
     .chatbot-wrapper {
         position: fixed !important;
         bottom: 30px !important;
         left: 30px !important;
-        z-index: 9999 !important;
+        z-index: 999999 !important;
+        pointer-events: none !important;
+        isolation: isolate;
+    }
+    
+    .chatbot-wrapper * {
+        pointer-events: auto !important;
     }
     
     /* Desktop Toggle Button - Different Style */
@@ -4011,6 +4033,7 @@ footer::after {
         box-shadow: 0 8px 30px rgba(16, 185, 129, 0.5);
         font-size: 1.8rem;
         border: 3px solid rgba(255, 255, 255, 0.3);
+        cursor: pointer !important;
     }
     
     .chatbot-toggle-btn:hover {
@@ -4027,15 +4050,27 @@ footer::after {
         width: 420px !important;
         height: 650px !important;
         max-height: calc(100vh - 150px) !important;
-        z-index: 10000 !important;
+        z-index: 10000000 !important;
         border-radius: 25px !important;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(16, 185, 129, 0.2) !important;
         border: 2px solid rgba(16, 185, 129, 0.3) !important;
         backdrop-filter: blur(20px) !important;
         -webkit-backdrop-filter: blur(20px) !important;
+        pointer-events: none !important;
+        isolation: isolate;
+        transform: translateY(20px) scale(0.9) translateZ(0) !important;
+        -webkit-transform: translateY(20px) scale(0.9) translateZ(0) !important;
+        will-change: transform, opacity;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
     
     .chatbot-popup.active {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateX(0) scale(1) translateZ(0) !important;
+        -webkit-transform: translateX(0) scale(1) translateZ(0) !important;
+        pointer-events: auto !important;
         animation: desktopChatbotSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
     }
     

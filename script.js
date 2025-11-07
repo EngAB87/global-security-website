@@ -438,8 +438,36 @@ function copyProductLink(url) {
     const chatbotMessages = document.getElementById('chatbotMessages');
     const chatbotBadge = document.getElementById('chatbotBadge');
     const chatbotQuickReplies = document.getElementById('chatbotQuickReplies');
+    const chatbotWrapper = document.getElementById('chatbotWrapper');
     
-    if (!chatbotToggleBtn || !chatbotPopup) return;
+    if (!chatbotToggleBtn || !chatbotPopup || !chatbotWrapper) return;
+    
+    // Force fixed positioning function
+    function ensureFixedPosition() {
+        if (window.innerWidth >= 769) {
+            chatbotWrapper.style.position = 'fixed';
+            chatbotWrapper.style.bottom = '30px';
+            chatbotWrapper.style.left = '30px';
+            chatbotWrapper.style.zIndex = '999999';
+            chatbotWrapper.style.top = 'auto';
+            chatbotWrapper.style.right = 'auto';
+            chatbotPopup.style.position = 'fixed';
+            chatbotPopup.style.bottom = '120px';
+            chatbotPopup.style.left = '30px';
+            chatbotPopup.style.zIndex = '10000000';
+            chatbotPopup.style.top = 'auto';
+            chatbotPopup.style.right = 'auto';
+        }
+    }
+    
+    // Apply on load
+    ensureFixedPosition();
+    
+    // Re-apply on resize
+    window.addEventListener('resize', ensureFixedPosition);
+    
+    // Re-apply on scroll (to prevent any positioning issues)
+    window.addEventListener('scroll', ensureFixedPosition);
     
     // Toggle chatbot popup
     chatbotToggleBtn.addEventListener('click', () => {
