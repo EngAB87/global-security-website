@@ -1562,6 +1562,17 @@ footer::before {
     width: auto;
     object-fit: contain;
     filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+    transition: transform 0.3s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05) rotate(5deg);
+}
+
+.footer-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
 }
 
 .footer-section h3 {
@@ -1569,12 +1580,33 @@ footer::before {
     font-size: 1.4rem;
     font-weight: 700;
     color: #10b981;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}
+
+.footer-title-wrapper h3 {
+    color: #ffffff;
+    margin-bottom: 0;
+}
+
+.footer-acronym {
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.8;
+    letter-spacing: 2px;
+    margin-top: -2px;
 }
 
 .footer-section p {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
     margin-top: 0.5rem;
+    font-size: 0.95rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .footer-section ul {
@@ -1584,6 +1616,13 @@ footer::before {
 .footer-section ul li {
     margin-bottom: 0.8rem;
     color: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    padding-right: 5px;
+}
+
+.footer-section ul li:hover {
+    color: #10b981;
+    transform: translateX(-3px);
 }
 
 .footer-section a {
@@ -1608,10 +1647,22 @@ footer::before {
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    margin-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.7);
+    margin-top: 2.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 0.95rem;
+    position: relative;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #10b981, transparent);
 }
 
 .footer-bottom p {
