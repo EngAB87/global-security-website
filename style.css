@@ -1315,6 +1315,64 @@ footer::before {
     color: var(--secondary-color);
 }
 
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    transition: all 0.3s ease;
+    z-index: 998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+    background: linear-gradient(135deg, #2563eb 0%, #059669 100%);
+}
+
+.back-to-top:active {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.back-to-top i {
+    transition: transform 0.3s ease;
+}
+
+.back-to-top:hover i {
+    transform: translateY(-2px);
+}
+
+[data-theme="dark"] .back-to-top {
+    background: linear-gradient(135deg, #60a5fa 0%, #34d399 100%);
+    box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+}
+
+[data-theme="dark"] .back-to-top:hover {
+    background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+    box-shadow: 0 6px 20px rgba(96, 165, 250, 0.6);
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
@@ -1574,5 +1632,13 @@ footer::before {
         width: 38px;
         height: 38px;
         font-size: 0.9rem;
+    }
+
+    .back-to-top {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1rem;
     }
 }

@@ -5,16 +5,9 @@ const header = document.querySelector('header');
 
 hamburger.addEventListener('click', () => {
     navMenu.classList.toggle('active');
-
+    
     // Animate hamburger
     hamburger.classList.toggle('active');
-
-    // Prevent body scroll when menu is open
-    if (navMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
-    }
 });
 
 // Header scroll effect
@@ -67,29 +60,7 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
         hamburger.classList.remove('active');
-        document.body.style.overflow = '';
     });
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
-        navMenu.classList.remove('active');
-        hamburger.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-// Prevent horizontal scroll
-document.addEventListener('DOMContentLoaded', () => {
-    const preventHorizontalScroll = () => {
-        if (document.body.scrollWidth > window.innerWidth) {
-            document.body.style.overflowX = 'hidden';
-        }
-    };
-
-    preventHorizontalScroll();
-    window.addEventListener('resize', preventHorizontalScroll);
 });
 
 // Smooth Scrolling
@@ -107,22 +78,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-const scrollSections = Array.from(document.querySelectorAll('section[id]'));
-
 // Active Navigation on Scroll
 window.addEventListener('scroll', () => {
-    let current = scrollSections.length ? scrollSections[0].id : '';
-
-    scrollSections.forEach(section => {
+    let current = '';
+    const sections = document.querySelectorAll('section');
+    
+    sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (window.scrollY >= (sectionTop - 200)) {
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= (sectionTop - 200)) {
             current = section.getAttribute('id');
         }
     });
 
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.classList.remove('active');
-        if (current && link.getAttribute('href') === `#${current}`) {
+        if (link.getAttribute('href') === `#${current}`) {
             link.classList.add('active');
         }
     });
@@ -136,36 +107,28 @@ window.addEventListener('scroll', () => {
     }
 });
 
-const animatedElements = document.querySelectorAll('.product-card, .service-card, .feature-box');
-
 // Animate elements on scroll
-if ('IntersectionObserver' in window) {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
 
-    animatedElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-} else {
-    animatedElements.forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'none';
-    });
-}
+// Observe all cards and sections
+document.querySelectorAll('.product-card, .service-card, .feature-box').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+});
 
 // Contact Form Handling
 const contactForm = document.getElementById('contactForm');
@@ -194,16 +157,67 @@ contactForm.addEventListener('submit', (e) => {
     contactForm.reset();
 });
 
-// Parallax effect for hero section (disabled on mobile for performance)
-if (window.innerWidth > 768) {
-    window.addEventListener('scroll', () => {
-        const hero = document.querySelector('.hero');
-        const scrolled = window.pageYOffset;
-        if (hero) {
-            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-        }
+// Scroll to top on page load/refresh
+window.addEventListener('load', () => {
+    // Scroll to top immediately
+    window.scrollTo({
+        top: 0,
+        behavior: 'auto' // Use 'auto' for instant scroll on load
     });
-}
+    
+    // Add loading animation
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        document.body.style.transition = 'opacity 0.5s ease';
+        document.body.style.opacity = '1';
+    }, 100);
+});
+
+// Also scroll to top when page is shown (for browser back/forward)
+window.addEventListener('pageshow', (event) => {
+    // If page was loaded from cache (back/forward navigation)
+    if (event.persisted) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'auto'
+        });
+    }
+});
+
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    const scrolled = window.pageYOffset;
+    if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+});
+
+// Back to Top Button
+const backToTopButton = document.getElementById('backToTop');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('show');
+    } else {
+        backToTopButton.classList.remove('show');
+    }
+});
+
+// Smooth scroll to top when button is clicked
+backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+    
+    // Add animation effect
+    backToTopButton.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+        backToTopButton.style.transform = '';
+    }, 200);
+});
 
 // Counter animation for statistics (if you want to add later)
 function animateCounter(element, target, duration) {
