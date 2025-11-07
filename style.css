@@ -3983,11 +3983,130 @@ footer::after {
         transform: translateY(100%) translateZ(0) !important;
         -webkit-transform: translateY(100%) translateZ(0) !important;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
+    }
+    
+    [data-theme="dark"] .chatbot-popup {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
     }
     
     .chatbot-popup.active {
         transform: translateY(0) translateZ(0) !important;
         -webkit-transform: translateY(0) translateZ(0) !important;
+    }
+    
+    /* Mobile Header - Enhanced like image */
+    .chatbot-popup-header {
+        background: linear-gradient(135deg, #10b981 0%, #3b82f6 50%, #8b5cf6 100%) !important;
+        padding: 1.2rem 1rem !important;
+        border-radius: 0 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        position: relative !important;
+    }
+    
+    .chatbot-popup-header::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    }
+    
+    .chatbot-popup-avatar {
+        width: 50px !important;
+        height: 50px !important;
+        background: rgba(255, 255, 255, 0.25) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+    }
+    
+    .chatbot-popup-info h4 {
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .chatbot-popup-status {
+        font-size: 0.8rem !important;
+        font-weight: 600 !important;
+    }
+    
+    .chatbot-popup-close {
+        width: 40px !important;
+        height: 40px !important;
+        background: rgba(255, 255, 255, 0.25) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    /* Mobile Messages Area */
+    .chatbot-popup-messages {
+        flex: 1 !important;
+        padding: 1.5rem 1rem !important;
+        background: transparent !important;
+        overflow-y: auto !important;
+    }
+    
+    /* Mobile Quick Replies */
+    .chatbot-popup-quick-replies {
+        padding: 1rem !important;
+        background: rgba(16, 185, 129, 0.1) !important;
+        border-top: 1px solid rgba(16, 185, 129, 0.2) !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 0.8rem !important;
+        justify-content: center !important;
+    }
+    
+    .chatbot-quick-reply {
+        padding: 0.8rem 1.2rem !important;
+        font-size: 0.9rem !important;
+        border-radius: 20px !important;
+        border: 2px solid rgba(16, 185, 129, 0.5) !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(10px) !important;
+        color: #ffffff !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .chatbot-quick-reply:hover {
+        background: rgba(16, 185, 129, 0.2) !important;
+        border-color: rgba(16, 185, 129, 0.8) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Mobile Input */
+    .chatbot-popup-input {
+        padding: 1rem !important;
+        background: rgba(15, 23, 42, 0.8) !important;
+        border-top: 1px solid rgba(16, 185, 129, 0.2) !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .chatbot-popup-input input {
+        padding: 1rem 1.2rem !important;
+        font-size: 1rem !important;
+        border-radius: 25px !important;
+        border: 2px solid rgba(16, 185, 129, 0.3) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(10px) !important;
+    }
+    
+    .chatbot-popup-input input:focus {
+        border-color: rgba(16, 185, 129, 0.6) !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.3) !important;
+    }
+    
+    .chatbot-send-btn {
+        width: 50px !important;
+        height: 50px !important;
+        background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%) !important;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4) !important;
     }
     
     .chatbot-toggle-btn {
@@ -4020,6 +4139,13 @@ footer::after {
         transform: translateY(100%) translateZ(0) !important;
         -webkit-transform: translateY(100%) translateZ(0) !important;
         transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
+    }
+    
+    [data-theme="dark"] .chatbot-popup {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
     }
     
     .chatbot-popup.active {
@@ -4027,12 +4153,49 @@ footer::after {
         -webkit-transform: translateY(0) translateZ(0) !important;
     }
     
+    .chatbot-popup-header {
+        padding: 1rem 0.8rem !important;
+    }
+    
+    .chatbot-popup-avatar {
+        width: 45px !important;
+        height: 45px !important;
+    }
+    
+    .chatbot-popup-info h4 {
+        font-size: 1rem !important;
+    }
+    
     .chatbot-popup-messages {
-        padding: 1rem;
+        padding: 1.2rem 0.8rem !important;
     }
     
     .chatbot-message-item {
         max-width: 90%;
+    }
+    
+    .chatbot-popup-quick-replies {
+        padding: 0.8rem !important;
+        gap: 0.6rem !important;
+    }
+    
+    .chatbot-quick-reply {
+        padding: 0.7rem 1rem !important;
+        font-size: 0.85rem !important;
+    }
+    
+    .chatbot-popup-input {
+        padding: 0.8rem !important;
+    }
+    
+    .chatbot-popup-input input {
+        padding: 0.9rem 1rem !important;
+        font-size: 0.95rem !important;
+    }
+    
+    .chatbot-send-btn {
+        width: 45px !important;
+        height: 45px !important;
     }
 }
 
