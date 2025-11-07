@@ -464,23 +464,28 @@ function copyProductLink(url) {
             chatbotPopup.style.right = 'auto';
             chatbotPopup.style.zIndex = '10000000';
         } else {
-            // Mobile - Centered
+            // Mobile - Button on left, Full screen popup
             chatbotWrapper.style.position = 'fixed';
             chatbotWrapper.style.bottom = window.innerWidth <= 480 ? '15px' : '20px';
-            chatbotWrapper.style.left = '50%';
-            chatbotWrapper.style.transform = 'translateX(-50%) translateZ(0)';
-            chatbotWrapper.style.webkitTransform = 'translateX(-50%) translateZ(0)';
+            chatbotWrapper.style.left = window.innerWidth <= 480 ? '15px' : '20px';
+            chatbotWrapper.style.transform = 'translateZ(0)';
+            chatbotWrapper.style.webkitTransform = 'translateZ(0)';
             chatbotWrapper.style.zIndex = '999999';
             chatbotWrapper.style.top = 'auto';
             chatbotWrapper.style.right = 'auto';
-            // Mobile - Popup fully centered (middle of screen)
+            // Mobile - Full screen popup
             chatbotPopup.style.position = 'fixed';
-            chatbotPopup.style.top = '50%';
-            chatbotPopup.style.left = '50%';
-            chatbotPopup.style.transform = 'translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0)';
-            chatbotPopup.style.webkitTransform = 'translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0)';
-            chatbotPopup.style.bottom = 'auto';
-            chatbotPopup.style.right = 'auto';
+            chatbotPopup.style.top = '0';
+            chatbotPopup.style.left = '0';
+            chatbotPopup.style.right = '0';
+            chatbotPopup.style.bottom = '0';
+            chatbotPopup.style.width = '100vw';
+            chatbotPopup.style.height = '100vh';
+            chatbotPopup.style.maxWidth = '100vw';
+            chatbotPopup.style.maxHeight = '100vh';
+            chatbotPopup.style.borderRadius = '0';
+            chatbotPopup.style.transform = 'translateY(100%) translateZ(0)';
+            chatbotPopup.style.webkitTransform = 'translateY(100%) translateZ(0)';
             chatbotPopup.style.zIndex = '10000000';
         }
     }
@@ -500,13 +505,15 @@ function copyProductLink(url) {
         if (chatbotPopup.classList.contains('active')) {
             if (chatbotBadge) chatbotBadge.style.display = 'none';
             if (chatbotInput) chatbotInput.focus();
-            // Update transform when active - ensure centered (both desktop and mobile)
+            // Update transform when active
             if (window.innerWidth >= 769) {
+                // Desktop - Centered
                 chatbotPopup.style.transform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
                 chatbotPopup.style.webkitTransform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
             } else {
-                chatbotPopup.style.transform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
-                chatbotPopup.style.webkitTransform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
+                // Mobile - Full screen slide up
+                chatbotPopup.style.transform = 'translateY(0) translateZ(0)';
+                chatbotPopup.style.webkitTransform = 'translateY(0) translateZ(0)';
             }
         }
     });
