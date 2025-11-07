@@ -3537,8 +3537,7 @@ footer::after {
         padding: 1.5rem;
     }
 
-/* Chatbot Styles - REMOVED */
-/* 
+/* Chatbot Styles */
 .chatbot-wrapper {
     position: fixed !important;
     bottom: 30px !important;
