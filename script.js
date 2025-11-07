@@ -445,7 +445,7 @@ function copyProductLink(url) {
     // Force fixed positioning function - Centered
     function ensureFixedPosition() {
         if (window.innerWidth >= 769) {
-            // Desktop - Centered
+            // Desktop - Toggle Button at bottom center
             chatbotWrapper.style.position = 'fixed';
             chatbotWrapper.style.bottom = '30px';
             chatbotWrapper.style.left = '50%';
@@ -454,14 +454,15 @@ function copyProductLink(url) {
             chatbotWrapper.style.zIndex = '999999';
             chatbotWrapper.style.top = 'auto';
             chatbotWrapper.style.right = 'auto';
+            // Desktop - Popup fully centered (middle of screen)
             chatbotPopup.style.position = 'fixed';
-            chatbotPopup.style.bottom = '120px';
+            chatbotPopup.style.top = '50%';
             chatbotPopup.style.left = '50%';
-            chatbotPopup.style.transform = 'translateX(-50%) translateY(20px) scale(0.9) translateZ(0)';
-            chatbotPopup.style.webkitTransform = 'translateX(-50%) translateY(20px) scale(0.9) translateZ(0)';
-            chatbotPopup.style.zIndex = '10000000';
-            chatbotPopup.style.top = 'auto';
+            chatbotPopup.style.transform = 'translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0)';
+            chatbotPopup.style.webkitTransform = 'translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0)';
+            chatbotPopup.style.bottom = 'auto';
             chatbotPopup.style.right = 'auto';
+            chatbotPopup.style.zIndex = '10000000';
         } else {
             // Mobile - Left
             chatbotWrapper.style.position = 'fixed';
@@ -498,8 +499,11 @@ function copyProductLink(url) {
         if (chatbotPopup.classList.contains('active')) {
             if (chatbotBadge) chatbotBadge.style.display = 'none';
             if (chatbotInput) chatbotInput.focus();
-            // Update transform when active
-            ensureFixedPosition();
+            // Update transform when active - ensure centered
+            if (window.innerWidth >= 769) {
+                chatbotPopup.style.transform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
+                chatbotPopup.style.webkitTransform = 'translate(-50%, -50%) translateY(0) scale(1) translateZ(0)';
+            }
         }
     });
     

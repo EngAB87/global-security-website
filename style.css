@@ -4067,17 +4067,18 @@ footer::after {
         border-color: rgba(255, 255, 255, 0.5);
     }
     
-    /* Desktop Popup - Centered Style */
+    /* Desktop Popup - Fully Centered Style */
     .chatbot-popup {
         position: fixed !important;
-        bottom: 120px !important;
+        top: 50% !important;
         left: 50% !important;
-        transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(20px) scale(0.9) translateZ(0) !important;
+        transform: translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0) !important;
+        -webkit-transform: translate(-50%, -50%) translateY(20px) scale(0.9) translateZ(0) !important;
+        bottom: auto !important;
         right: auto !important;
         width: 420px !important;
         height: 650px !important;
-        max-height: calc(100vh - 150px) !important;
+        max-height: calc(100vh - 100px) !important;
         z-index: 10000000 !important;
         border-radius: 25px !important;
         box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(16, 185, 129, 0.2) !important;
@@ -4094,8 +4095,8 @@ footer::after {
     .chatbot-popup.active {
         opacity: 1 !important;
         visibility: visible !important;
-        transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
-        -webkit-transform: translateX(-50%) translateY(0) scale(1) translateZ(0) !important;
+        transform: translate(-50%, -50%) translateY(0) scale(1) translateZ(0) !important;
+        -webkit-transform: translate(-50%, -50%) translateY(0) scale(1) translateZ(0) !important;
         pointer-events: auto !important;
         animation: desktopChatbotSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
     }
@@ -4103,11 +4104,11 @@ footer::after {
     @keyframes desktopChatbotSlideIn {
         from {
             opacity: 0;
-            transform: translateX(-50%) translateY(20px) scale(0.9);
+            transform: translate(-50%, -50%) translateY(20px) scale(0.9);
         }
         to {
             opacity: 1;
-            transform: translateX(-50%) translateY(0) scale(1);
+            transform: translate(-50%, -50%) translateY(0) scale(1);
         }
     }
     
