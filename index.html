@@ -662,19 +662,37 @@
                 <div class="contact-form">
                     <form id="contactForm">
                         <div class="form-group">
-                            <input type="text" id="name" placeholder="الاسم" required>
+                            <div class="input-wrapper">
+                                <input type="text" id="name" placeholder="الاسم" required>
+                                <i class="fas fa-user input-icon"></i>
+                                <span class="input-line"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+                            <div class="input-wrapper">
+                                <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+                                <i class="fas fa-phone input-icon"></i>
+                                <span class="input-line"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <input type="email" id="email" placeholder="البريد الإلكتروني">
+                            <div class="input-wrapper">
+                                <input type="email" id="email" placeholder="البريد الإلكتروني">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <span class="input-line"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <textarea id="message" rows="5" placeholder="رسالتك" required></textarea>
+                            <div class="input-wrapper textarea-wrapper">
+                                <textarea id="message" rows="5" placeholder="رسالتك" required></textarea>
+                                <i class="fas fa-comment-alt input-icon"></i>
+                                <span class="input-line"></span>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" id="submitBtn">
-                            <span class="btn-text">إرسال الرسالة</span>
+                        <button type="submit" class="btn btn-submit" id="submitBtn">
+                            <span class="btn-text">
+                                <i class="fas fa-paper-plane"></i> إرسال الرسالة
+                            </span>
                             <span class="btn-loader" style="display: none;">
                                 <i class="fas fa-spinner fa-spin"></i> جاري الإرسال...
                             </span>
