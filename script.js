@@ -107,22 +107,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
+const scrollSections = Array.from(document.querySelectorAll('section[id]'));
+
 // Active Navigation on Scroll
 window.addEventListener('scroll', () => {
-    let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
+    let current = scrollSections.length ? scrollSections[0].id : '';
+
+    scrollSections.forEach(section => {
         const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
+        if (window.scrollY >= (sectionTop - 200)) {
             current = section.getAttribute('id');
         }
     });
 
     document.querySelectorAll('.nav-menu a').forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
+        if (current && link.getAttribute('href') === `#${current}`) {
             link.classList.add('active');
         }
     });
@@ -136,28 +136,36 @@ window.addEventListener('scroll', () => {
     }
 });
 
+const animatedElements = document.querySelectorAll('.product-card, .service-card, .feature-box');
+
 // Animate elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+if ('IntersectionObserver' in window) {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
     });
-}, observerOptions);
-
-// Observe all cards and sections
-document.querySelectorAll('.product-card, .service-card, .feature-box').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-});
+} else {
+    animatedElements.forEach(el => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+    });
+}
 
 // Contact Form Handling
 const contactForm = document.getElementById('contactForm');
@@ -184,15 +192,6 @@ contactForm.addEventListener('submit', (e) => {
     
     // Reset form
     contactForm.reset();
-});
-
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
 });
 
 // Parallax effect for hero section (disabled on mobile for performance)
