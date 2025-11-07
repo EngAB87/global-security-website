@@ -426,28 +426,57 @@ function copyProductLink(url) {
 }
 
 // Chatbot Functionality
-const chatbotToggle = document.getElementById('chatbotToggle');
-const chatbotWindow = document.getElementById('chatbotWindow');
-const chatbotClose = document.getElementById('chatbotClose');
-const chatbotInput = document.getElementById('chatbotInput');
-const chatbotSend = document.getElementById('chatbotSend');
-const chatbotMessages = document.getElementById('chatbotMessages');
-const chatbotBadge = document.querySelector('.chatbot-badge');
-
-// Toggle chatbot window
-if (chatbotToggle) {
-    chatbotToggle.addEventListener('click', () => {
-        chatbotWindow.classList.toggle('active');
-        if (chatbotWindow.classList.contains('active')) {
-            chatbotBadge.style.display = 'none';
-            chatbotInput.focus();
-        }
-    });
+function initChatbot() {
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+    const chatbotBadge = document.querySelector('.chatbot-badge');
+    const chatbotContainer = document.getElementById('chatbotContainer');
+    
+    // Ensure chatbot is visible
+    if (chatbotContainer) {
+        chatbotContainer.style.display = 'block';
+        chatbotContainer.style.visibility = 'visible';
+        chatbotContainer.style.opacity = '1';
+    }
+    
+    if (chatbotToggle) {
+        chatbotToggle.style.display = 'flex';
+        chatbotToggle.style.visibility = 'visible';
+        chatbotToggle.style.opacity = '1';
+    }
+    
+    // Toggle chatbot window
+    if (chatbotToggle && chatbotWindow) {
+        chatbotToggle.addEventListener('click', () => {
+            chatbotWindow.classList.toggle('active');
+            if (chatbotWindow.classList.contains('active')) {
+                if (chatbotBadge) chatbotBadge.style.display = 'none';
+                if (chatbotInput) chatbotInput.focus();
+            }
+        });
+    }
+    
+    return { chatbotToggle, chatbotWindow, chatbotClose, chatbotInput, chatbotSend, chatbotMessages, chatbotBadge };
 }
 
-if (chatbotClose) {
-    chatbotClose.addEventListener('click', () => {
-        chatbotWindow.classList.remove('active');
+// Initialize chatbot when DOM is ready
+let chatbotElements = {};
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        chatbotElements = initChatbot();
+    });
+} else {
+    chatbotElements = initChatbot();
+}
+
+// Close chatbot
+if (chatbotElements.chatbotClose && chatbotElements.chatbotWindow) {
+    chatbotElements.chatbotClose.addEventListener('click', () => {
+        chatbotElements.chatbotWindow.classList.remove('active');
     });
 }
 
@@ -482,6 +511,9 @@ function getBotResponse(userMessage) {
 
 // Add message to chat
 function addMessage(text, isUser = false) {
+    const messagesContainer = chatbotElements.chatbotMessages || document.getElementById('chatbotMessages');
+    if (!messagesContainer) return null;
+    
     const messageDiv = document.createElement('div');
     messageDiv.className = `chatbot-message ${isUser ? 'user-message' : 'bot-message'}`;
     
@@ -505,50 +537,61 @@ function addMessage(text, isUser = false) {
     messageDiv.appendChild(avatar);
     messageDiv.appendChild(content);
     
-    chatbotMessages.appendChild(messageDiv);
+    messagesContainer.appendChild(messageDiv);
     
     // Scroll to bottom
-    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
     
     return messageDiv;
 }
 
 // Send message
 function sendMessage() {
-    const message = chatbotInput.value.trim();
+    const input = chatbotElements.chatbotInput || document.getElementById('chatbotInput');
+    const sendBtn = chatbotElements.chatbotSend || document.getElementById('chatbotSend');
+    const messagesContainer = chatbotElements.chatbotMessages || document.getElementById('chatbotMessages');
+    
+    if (!input) return;
+    
+    const message = input.value.trim();
     if (!message) return;
     
     // Add user message
     addMessage(message, true);
-    chatbotInput.value = '';
+    input.value = '';
     
     // Disable send button
-    chatbotSend.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
     
     // Show typing indicator
     const typingIndicator = addMessage('يكتب...', false);
     
     // Simulate bot thinking
     setTimeout(() => {
-        typingIndicator.remove();
+        if (typingIndicator) typingIndicator.remove();
         
         // Get bot response
         const botResponse = getBotResponse(message);
         
         // Add bot response with typing effect
         const botMessage = addMessage('', false);
+        if (!botMessage) return;
+        
         const botText = botMessage.querySelector('p');
+        if (!botText) return;
         
         let index = 0;
         const typingInterval = setInterval(() => {
             if (index < botResponse.length) {
                 botText.textContent = botResponse.substring(0, index + 1);
                 index++;
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                if (messagesContainer) {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
             } else {
                 clearInterval(typingInterval);
-                chatbotSend.disabled = false;
-                chatbotInput.focus();
+                if (sendBtn) sendBtn.disabled = false;
+                if (input) input.focus();
             }
         }, 30);
     }, 1000);
@@ -556,40 +599,59 @@ function sendMessage() {
 
 // Send quick message
 function sendQuickMessage(message) {
-    chatbotInput.value = message;
-    sendMessage();
+    const input = chatbotElements.chatbotInput || document.getElementById('chatbotInput');
+    if (input) {
+        input.value = message;
+        sendMessage();
+    }
 }
 
-// Event listeners
-if (chatbotSend) {
-    chatbotSend.addEventListener('click', sendMessage);
-}
-
-if (chatbotInput) {
-    chatbotInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
-    });
+// Setup event listeners
+function setupChatbotListeners() {
+    const sendBtn = chatbotElements.chatbotSend || document.getElementById('chatbotSend');
+    const input = chatbotElements.chatbotInput || document.getElementById('chatbotInput');
+    const messagesContainer = chatbotElements.chatbotMessages || document.getElementById('chatbotMessages');
+    const badge = chatbotElements.chatbotBadge || document.querySelector('.chatbot-badge');
     
-    chatbotInput.addEventListener('input', () => {
-        chatbotSend.disabled = !chatbotInput.value.trim();
-    });
+    if (sendBtn) {
+        sendBtn.addEventListener('click', sendMessage);
+    }
+    
+    if (input) {
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        input.addEventListener('input', () => {
+            if (sendBtn) {
+                sendBtn.disabled = !input.value.trim();
+            }
+        });
+    }
+    
+    // Hide badge after first interaction
+    let badgeHidden = false;
+    if (messagesContainer) {
+        const observer = new MutationObserver(() => {
+            if (!badgeHidden && messagesContainer.children.length > 1) {
+                badgeHidden = true;
+                if (badge) {
+                    badge.style.display = 'none';
+                }
+            }
+        });
+        observer.observe(messagesContainer, { childList: true });
+    }
 }
 
-// Hide badge after first interaction
-let badgeHidden = false;
-if (chatbotMessages) {
-    const observer = new MutationObserver(() => {
-        if (!badgeHidden && chatbotMessages.children.length > 1) {
-            badgeHidden = true;
-            if (chatbotBadge) {
-                chatbotBadge.style.display = 'none';
-            }
-        }
-    });
-    observer.observe(chatbotMessages, { childList: true });
+// Initialize listeners when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupChatbotListeners);
+} else {
+    setupChatbotListeners();
 }
 
 // Toast Notification System
