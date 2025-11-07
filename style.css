@@ -59,6 +59,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    scroll-padding-top: 100px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -1215,6 +1216,61 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     font-weight: 400;
     letter-spacing: 0.3px;
     word-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+/* Product Share Buttons */
+.product-share {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .product-share {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.product-share span {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.product-share .share-btn {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem 0.8rem;
+    color: #10b981;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-share .share-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.product-share .share-btn:active {
+    transform: translateY(0);
+}
+
+[data-theme="dark"] .product-share .share-btn {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+[data-theme="dark"] .product-share .share-btn:hover {
+    background: rgba(16, 185, 129, 0.25);
 }
 
 .product-features {
@@ -1950,6 +2006,108 @@ box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
     border-color: #10b981;
     background-color: rgba(13, 17, 23, 0.8);
     box-shadow: 0 0 25px rgba(16, 185, 129, 0.5), inset 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Form Validation */
+.error-message {
+    display: block;
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding-right: 0.5rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.form-group input:invalid:not(:placeholder-shown),
+.form-group textarea:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+.form-group input:valid:not(:placeholder-shown),
+.form-group textarea:valid:not(:placeholder-shown) {
+    border-color: #10b981;
+}
+
+.char-counter {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    z-index: 2;
+}
+
+.textarea-wrapper .char-counter {
+    bottom: 0.8rem;
+}
+
+.char-counter span {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.char-counter.warning span {
+    color: #f59e0b;
+}
+
+.char-counter.error span {
+    color: #ef4444;
+}
+
+/* Copy to Clipboard */
+.copyable-text {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.copyable-text:hover {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.copy-btn {
+    background: rgba(16, 185, 129, 0.15);
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    color: #10b981;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.copy-btn:hover {
+    background: rgba(16, 185, 129, 0.25);
+    transform: scale(1.1);
+    color: #34d399;
+}
+
+.copy-btn.copied {
+    background: #10b981;
+    color: white;
+}
+
+.copy-btn.copied i::before {
+    content: "\f00c";
+}
+
+.contact-item p {
+    position: relative;
 }
 
 /* Footer */

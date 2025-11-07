@@ -652,7 +652,12 @@
                         </div>
                         <div>
                             <h3>اتصل بنا الآن</h3>
-                            <p>+20 112 1153 344</p>
+                            <p class="copyable-text" data-text="+201121153344">
+                                +20 112 1153 344
+                                <button class="copy-btn" onclick="copyToClipboard('+201121153344', this)" aria-label="نسخ الرقم">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </p>
                             <span class="contact-label">متاح طوال اليوم</span>
                         </div>
                     </div>
@@ -662,7 +667,12 @@
                         </div>
                         <div>
                             <h3>راسلنا عبر البريد</h3>
-                            <p>info@globalsmartsecurity.com</p>
+                            <p class="copyable-text" data-text="info@globalsmartsecurity.com">
+                                info@globalsmartsecurity.com
+                                <button class="copy-btn" onclick="copyToClipboard('info@globalsmartsecurity.com', this)" aria-label="نسخ البريد">
+                                    <i class="fas fa-copy"></i>
+                                </button>
+                            </p>
                             <span class="contact-label">نرد خلال 24 ساعة</span>
                         </div>
                     </div>
@@ -695,30 +705,37 @@
                     <form id="contactForm">
                         <div class="form-group">
                             <div class="input-wrapper">
-                                <input type="text" id="name" placeholder="الاسم" required>
+                                <input type="text" id="name" placeholder="الاسم" required minlength="2" maxlength="50">
                                 <i class="fas fa-user input-icon"></i>
                                 <span class="input-line"></span>
+                                <span class="error-message" id="nameError"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-wrapper">
-                                <input type="tel" id="phone" placeholder="رقم الهاتف" required>
+                                <input type="tel" id="phone" placeholder="رقم الهاتف" required pattern="[0-9+\s-]{10,15}">
                                 <i class="fas fa-phone input-icon"></i>
                                 <span class="input-line"></span>
+                                <span class="error-message" id="phoneError"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-wrapper">
-                                <input type="email" id="email" placeholder="البريد الإلكتروني">
+                                <input type="email" id="email" placeholder="البريد الإلكتروني" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
                                 <i class="fas fa-envelope input-icon"></i>
                                 <span class="input-line"></span>
+                                <span class="error-message" id="emailError"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="input-wrapper textarea-wrapper">
-                                <textarea id="message" rows="5" placeholder="رسالتك" required></textarea>
+                                <textarea id="message" rows="5" placeholder="رسالتك" required minlength="10" maxlength="500"></textarea>
                                 <i class="fas fa-comment-alt input-icon"></i>
                                 <span class="input-line"></span>
+                                <div class="char-counter">
+                                    <span id="charCount">0</span> / 500
+                                </div>
+                                <span class="error-message" id="messageError"></span>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-submit" id="submitBtn">

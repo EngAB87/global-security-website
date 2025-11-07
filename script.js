@@ -158,44 +158,272 @@ document.querySelectorAll('.product-card, .service-card, .feature-box').forEach(
     observer.observe(el);
 });
 
-// Contact Form Handling
+// Add Share Buttons to Product Cards dynamically
+function addShareButtonsToProducts() {
+    document.querySelectorAll('.product-card').forEach(card => {
+        const productInfo = card.querySelector('.product-info');
+        if (!productInfo) return;
+        
+        // Check if share buttons already exist
+        if (productInfo.querySelector('.product-share')) return;
+        
+        const productTitle = card.querySelector('h3')?.textContent || 'منتج';
+        const sectionId = card.closest('section')?.id || '';
+        const productUrl = `https://globalsmartsecurity.com/${sectionId ? '#' + sectionId : ''}`;
+        
+        const shareDiv = document.createElement('div');
+        shareDiv.className = 'product-share';
+        shareDiv.innerHTML = `
+            <span>مشاركة:</span>
+            <button class="share-btn" onclick="shareProduct('${productTitle}', '${productUrl}')" title="مشاركة عبر واتساب">
+                <i class="fab fa-whatsapp"></i>
+            </button>
+            <button class="share-btn" onclick="shareProduct('${productTitle}', '${productUrl}', 'facebook')" title="مشاركة على فيسبوك">
+                <i class="fab fa-facebook-f"></i>
+            </button>
+            <button class="share-btn" onclick="copyProductLink('${productUrl}')" title="نسخ الرابط">
+                <i class="fas fa-link"></i>
+            </button>
+        `;
+        
+        productInfo.appendChild(shareDiv);
+    });
+}
+
+// Initialize share buttons when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addShareButtonsToProducts);
+} else {
+    addShareButtonsToProducts();
+}
+
+// Copy to Clipboard Function
+function copyToClipboard(text, button) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+            const originalHTML = button.innerHTML;
+            button.classList.add('copied');
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            showToast('تم النسخ!', 'تم نسخ ' + text + ' إلى الحافظة', 'success', 2000);
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = originalHTML;
+            }, 2000);
+        }).catch(() => {
+            showToast('خطأ!', 'فشل نسخ النص', 'error');
+        });
+    } else {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            const originalHTML = button.innerHTML;
+            button.classList.add('copied');
+            button.innerHTML = '<i class="fas fa-check"></i>';
+            showToast('تم النسخ!', 'تم نسخ ' + text + ' إلى الحافظة', 'success', 2000);
+            
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = originalHTML;
+            }, 2000);
+        } catch (err) {
+            showToast('خطأ!', 'فشل نسخ النص', 'error');
+        }
+        document.body.removeChild(textArea);
+    }
+}
+
+// Smooth Scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#' || href === '#!') return;
+        
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+            const headerOffset = 100;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Contact Form Handling with Validation
 const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Character counter for message
+const messageTextarea = document.getElementById('message');
+const charCount = document.getElementById('charCount');
+const charCounter = document.querySelector('.char-counter');
+
+if (messageTextarea && charCount) {
+    messageTextarea.addEventListener('input', () => {
+        const length = messageTextarea.value.length;
+        charCount.textContent = length;
+        
+        // Update counter color
+        charCounter.classList.remove('warning', 'error');
+        if (length > 450) {
+            charCounter.classList.add('error');
+        } else if (length > 400) {
+            charCounter.classList.add('warning');
+        }
+    });
+}
+
+// Form validation
+function validateForm() {
+    let isValid = true;
+    const name = document.getElementById('name');
+    const phone = document.getElementById('phone');
+    const email = document.getElementById('email');
+    const message = document.getElementById('message');
     
-    const name = document.getElementById('name').value;
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+    // Clear previous errors
+    document.querySelectorAll('.error-message').forEach(error => {
+        error.classList.remove('show');
+        error.textContent = '';
+    });
     
-    // Show loading state
-    submitBtn.classList.add('loading');
-    submitBtn.disabled = true;
+    // Validate name
+    if (!name.value.trim() || name.value.trim().length < 2) {
+        showFieldError('nameError', 'الاسم يجب أن يكون على الأقل حرفين');
+        isValid = false;
+    }
     
-    // Simulate processing delay (you can adjust this)
-    setTimeout(() => {
-        // Create WhatsApp message
-        const whatsappMessage = `مرحباً، أنا ${name}%0A` +
-                               `رقم الهاتف: ${phone}%0A` +
-                               `${email ? `البريد الإلكتروني: ${email}%0A` : ''}` +
-                               `الرسالة: ${message}`;
+    // Validate phone
+    const phoneRegex = /^(\+20|0)?1[0-9]{9}$/;
+    const cleanPhone = phone.value.replace(/[\s-]/g, '');
+    if (!phone.value.trim() || !phoneRegex.test(cleanPhone)) {
+        showFieldError('phoneError', 'يرجى إدخال رقم هاتف مصري صحيح (مثال: 01123456789)');
+        isValid = false;
+    }
+    
+    // Validate email (if provided)
+    if (email.value.trim()) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.value)) {
+            showFieldError('emailError', 'يرجى إدخال بريد إلكتروني صحيح');
+            isValid = false;
+        }
+    }
+    
+    // Validate message
+    if (!message.value.trim() || message.value.trim().length < 10) {
+        showFieldError('messageError', 'الرسالة يجب أن تكون على الأقل 10 أحرف');
+        isValid = false;
+    }
+    
+    return isValid;
+}
+
+function showFieldError(errorId, message) {
+    const errorElement = document.getElementById(errorId);
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.classList.add('show');
+    }
+}
+
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
         
-        // Open WhatsApp
-        window.open(`https://wa.me/201121153344?text=${whatsappMessage}`, '_blank');
+        // Validate form
+        if (!validateForm()) {
+            showToast('خطأ في التحقق', 'يرجى تصحيح الأخطاء في النموذج', 'error');
+            return;
+        }
         
-        // Show success message
-        showToast('نجح!', 'شكراً لتواصلك معنا! سيتم فتح واتساب لإرسال رسالتك.', 'success');
+        const name = document.getElementById('name').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
         
-        // Reset form
-        contactForm.reset();
+        // Show loading state
+        submitBtn.classList.add('loading');
+        submitBtn.disabled = true;
         
-        // Remove loading state
-        submitBtn.classList.remove('loading');
-        submitBtn.disabled = false;
-    }, 1000); // 1 second delay to show loading state
-});
+        // Simulate processing delay
+        setTimeout(() => {
+            // Create WhatsApp message
+            const whatsappMessage = `مرحباً، أنا ${name}%0A` +
+                                   `رقم الهاتف: ${phone}%0A` +
+                                   `${email ? `البريد الإلكتروني: ${email}%0A` : ''}` +
+                                   `الرسالة: ${message}`;
+            
+            // Open WhatsApp
+            window.open(`https://wa.me/201121153344?text=${whatsappMessage}`, '_blank');
+            
+            // Show success message
+            showToast('نجح!', 'شكراً لتواصلك معنا! سيتم فتح واتساب لإرسال رسالتك.', 'success');
+            
+            // Reset form
+            contactForm.reset();
+            charCount.textContent = '0';
+            charCounter.classList.remove('warning', 'error');
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.classList.remove('show');
+            });
+            
+            // Remove loading state
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        }, 1000);
+    });
+    
+    // Real-time validation
+    const inputs = contactForm.querySelectorAll('input, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => {
+            if (input.value.trim()) {
+                validateForm();
+            }
+        });
+        
+        input.addEventListener('input', () => {
+            const errorId = input.id + 'Error';
+            const errorElement = document.getElementById(errorId);
+            if (errorElement && input.validity.valid) {
+                errorElement.classList.remove('show');
+            }
+        });
+    });
+}
+
+// Share Product Function
+function shareProduct(productName, url, platform = 'whatsapp') {
+    const shareText = `شاهد ${productName} من Global Smart Security: ${url}`;
+    
+    if (platform === 'whatsapp') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+    } else if (platform === 'facebook') {
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    } else if (platform === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(url)}`, '_blank');
+    }
+    
+    showToast('تم المشاركة!', `جاري فتح ${platform === 'whatsapp' ? 'واتساب' : platform === 'facebook' ? 'فيسبوك' : 'تويتر'}...`, 'info');
+}
+
+// Copy Product Link
+function copyProductLink(url) {
+    const button = event.target.closest('.share-btn');
+    copyToClipboard(url, button);
+}
 
 // Toast Notification System
 function showToast(title, message, type = 'success', duration = 3000) {
