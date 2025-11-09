@@ -653,6 +653,8 @@ header.scrolled .header-social-icon {
     flex-direction: column;
     cursor: pointer;
     gap: 5px;
+    z-index: 1001;
+    position: relative;
 }
 
 .hamburger span {
@@ -3806,9 +3808,20 @@ footer::after {
         display: none;
     }
     
+    /* Show hamburger on mobile */
+    .hamburger {
+        display: flex !important;
+    }
+    
     /* Hide nav menu by default on mobile - show hamburger instead */
     .nav-menu {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
     }
     
     .nav-menu.active {
@@ -3834,9 +3847,26 @@ footer::after {
         pointer-events: auto !important;
     }
     
-    /* Hide nav menu when not active */
+    /* Force hide nav menu when not active on mobile */
     .nav-menu:not(.active) {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    /* Ensure nav menu items are hidden when menu is not active */
+    .nav-menu:not(.active) a,
+    .nav-menu:not(.active) li {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
 
     .nav-menu.active a {
