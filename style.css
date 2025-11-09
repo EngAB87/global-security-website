@@ -3809,53 +3809,58 @@ footer::after {
     }
     
     .nav-menu {
-        position: fixed;
-        top: 0;
-        right: 0;
-        width: 100%;
-        height: 100vh;
-        background-color: var(--bg-color);
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.5s ease-in-out;
-        display: flex;
-        transform: translateX(100%);
-        z-index: 1000;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100vh !important;
+        background-color: var(--bg-color) !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: transform 0.5s ease-in-out !important;
+        display: flex !important;
+        transform: translateX(100%) !important;
+        z-index: 1000 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        list-style: none !important;
+        gap: 0 !important;
     }
 
     .nav-menu.active {
-        transform: translateX(0);
+        transform: translateX(0) !important;
     }
 
     .nav-menu a {
-        font-size: 1.3rem;
-        margin: 0.8rem 0;
-        padding: 0.8rem 1.5rem;
-        width: 90%;
-        text-align: center;
+        font-size: 1.3rem !important;
+        margin: 0.8rem 0 !important;
+        padding: 0.8rem 1.5rem !important;
+        width: 90% !important;
+        text-align: center !important;
+        white-space: normal !important;
     }
 
     .nav-menu a.active {
-        background: var(--gradient-primary);
-        color: white;
+        background: var(--gradient-primary) !important;
+        color: white !important;
     }
 
     .hamburger {
-        display: flex;
-        z-index: 1001;
+        display: flex !important;
+        z-index: 1001 !important;
     }
 
     .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
+        transform: rotate(45deg) translate(5px, 5px) !important;
     }
 
     .hamburger.active span:nth-child(2) {
-        opacity: 0;
+        opacity: 0 !important;
     }
 
     .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
+        transform: rotate(-45deg) translate(5px, -5px) !important;
     }
     
     [data-theme="dark"] .nav-menu.active a.active {
